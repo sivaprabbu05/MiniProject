@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AgriFlow | Smart Irrigation</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand"><span class="brand-icon">✳</span> AgriFlow</div>
+    <p class="nav-label">WORKSPACE</p>
+    <a class="nav-link active" href="#dashboard">▦ &nbsp; Dashboard</a>
+    <a class="nav-link" href="#fields">▤ &nbsp; Field Monitoring</a>
+    <a class="nav-link" href="#priority">⇅ &nbsp; Irrigation Priority</a>
+    <a class="nav-link" href="#water">◉ &nbsp; Water Resources</a>
+
+    <div class="sidebar-bottom">
+      <div class="status-dot"></div>
+      <div>
+        <strong>System online</strong>
+        <small>Demo environment</small>
+      </div>
+    </div>
+  </aside>
+
+  <main class="main-content" id="dashboard">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">SMART AGRICULTURE / CONTROL CENTER</p>
+        <h1>Good day, Farmer 👋</h1>
+        <p class="muted">Monitor your fields and manage water intelligently.</p>
+      </div>
+      <div class="top-actions">
+        <span class="live"><i></i> DEMO LIVE</span>
+        <button class="primary-btn" id="addFieldBtn">+ Add field</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="hero-tag">✦ INTELLIGENT WATER MANAGEMENT</span>
+        <h2>Every drop.<br>Used wisely.</h2>
+        <p>Prioritize fields by soil moisture and water demand to make every irrigation decision count.</p>
+        <a href="#priority" class="hero-link">View irrigation priorities →</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="hill hill-back"></div>
+        <div class="hill hill-front"></div>
+        <div class="water-drop">💧</div>
+        <div class="plant plant-one">🌱</div>
+        <div class="plant plant-two">🌿</div>
+      </div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-top"><span>Total fields</span><span class="stat-icon">▤</span></div>
+        <h2 id="fieldCount">4</h2>
+        <p class="stat-note">Managed zones</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top"><span>Average moisture</span><span class="stat-icon blue">◉</span></div>
+        <h2 id="avgMoisture">31%</h2>
+        <p class="stat-note">Across all fields</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top"><span>Water available</span><span class="stat-icon aqua">♧</span></div>
+        <h2 id="waterAvailable">12,000 <small>L</small></h2>
+        <p class="stat-note">Available reservoir</p>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top"><span>Need attention</span><span class="stat-icon orange">!</span></div>
+        <h2 id="attentionCount">3</h2>
+        <p class="stat-note">Moisture below 40%</p>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="panel fields-panel" id="fields">
+        <div class="panel-heading">
+          <div>
+            <h3>Field monitoring</h3>
+            <p class="muted">Monitor moisture and control demo watering</p>
+          </div>
+          <span class="subtle-pill">All zones</span>
+        </div>
+        <div class="field-list" id="fieldList"></div>
+      </article>
+
+      <article class="panel priority-panel" id="priority">
+        <div class="panel-heading">
+          <div>
+            <h3>Priority queue</h3>
+            <p class="muted">Recommended watering order</p>
+          </div>
+          <span class="priority-badge">HIGH → LOW</span>
+        </div>
+        <div id="priorityList" class="priority-list"></div>
+
+        <div class="algorithm-note">
+          <span>ⓘ</span>
+          <p>
+            <strong>Algorithm insight</strong><br>
+            Priority is calculated using moisture deficit (70%)
+            and relative water demand (30%). This demonstrates
+            priority-based irrigation scheduling.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel water-panel" id="water">
+      <div class="panel-heading">
+        <div>
+          <h3>Water resource allocation</h3>
+          <p class="muted">Allocate water according to field priority</p>
+        </div>
+        <span class="subtle-pill">Litres (L)</span>
+      </div>
+
+      <div class="water-layout">
+        <div class="water-summary">
+          <p class="muted">Available reservoir</p>
+          <h2><span id="reservoirValue">12,000</span> <small>L</small></h2>
+          <div class="progress-track">
+            <div id="reservoirBar" class="progress-fill"></div>
+          </div>
+          <p class="muted small" id="reservoirCaption">100% of reference water remaining</p>
+
+          <label for="waterInput">Available water (litres)</label>
+          <input type="number" id="waterInput" min="0" max="1000000000" value="12000">
+
+          <button class="primary-btn full-btn" id="allocateBtn">Calculate allocation →</button>
+          <button class="secondary-btn full-btn" id="resetBtn">Reset demo</button>
+        </div>
+
+        <div class="allocation-results">
+          <div class="result-card">
+            <span>Total water demand</span>
+            <strong id="totalDemand">—</strong>
+          </div>
+          <div class="result-card">
+            <span>Water allocated</span>
+            <strong id="totalAllocated">—</strong>
+          </div>
+          <div class="result-card">
+            <span>Remaining water</span>
+            <strong id="remainingWater">—</strong>
+          </div>
+          <div class="result-card">
+            <span>Fully supplied fields</span>
+            <strong id="fullyWatered">—</strong>
+          </div>
+        </div>
+      </div>
+
+      <p id="allocationMessage" class="message" role="status">
+        Sample data loaded. Calculate allocation to see results.
+      </p>
+    </section>
+
+    <footer>
+      <span>AgriFlow · Smart Agricultural Irrigation System</span>
+      <span>Academic prototype · Simulated sensor data</span>
+    </footer>
+  </main>
+
+  <dialog id="fieldDialog">
+    <form id="fieldForm">
+      <div class="dialog-heading">
+        <div>
+          <h3>Add a field</h3>
+          <p class="muted">Customize the crop and water requirement.</p>
+        </div>
+        <button type="button" id="closeDialog" class="close-btn" aria-label="Close">✕</button>
+      </div>
+
+      <label for="fieldName">Field name</label>
+      <input id="fieldName" required maxlength="40" placeholder="e.g. North Field">
+
+      <label for="cropName">Crop name</label>
+      <input
+        id="cropName"
+        type="text"
+        required
+        maxlength="50"
+        list="cropSuggestions"
+        placeholder="e.g. Coconut, Banana, Wheat"
+      >
+      <datalist id="cropSuggestions">
+        <option value="Tomato"></option>
+        <option value="Rice"></option>
+        <option value="Wheat"></option>
+        <option value="Banana"></option>
+        <option value="Coconut"></option>
+        <option value="Sugarcane"></option>
+        <option value="Vegetables"></option>
+        <option value="Mango"></option>
+        <option value="Flower Plants"></option>
+        <option value="Grass"></option>
+      </datalist>
+
+      <p class="hint">Type any crop name or choose a suggestion.</p>
+
+      <label for="waterRate">Water requirement per acre (litres)</label>
+      <input
+        id="waterRate"
+        type="number"
+        min="1"
+        max="1000000000"
+        step="1"
+        value="1000"
+        required
+      >
+      <p class="hint">This value is used to calculate the field's water demand.</p>
+
+      <label for="fieldArea">Area (acres)</label>
+      <input id="fieldArea" type="number" min="0.01" max="100000" step="0.01" value="1" required>
+
+      <label for="fieldMoisture">Soil moisture (%)</label>
+      <input id="fieldMoisture" type="number" min="0" max="100" step="1" value="25" required>
+
+      <button class="primary-btn full-btn" type="submit">Add field to dashboard</button>
+    </form>
+  </dialog>
+</body>
+</html>
